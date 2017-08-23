@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 配置为开发模式 -->
+   <constant name="struts.devMode" value="true" />
+   <!-- 配置扩展名为action -->
+   <constant name="struts.action.extension" value="action" />
+   <!-- 配置主题为simple -->
+   <constant name="struts.ui.theme" value="simple" />
+
+
+    <package name="default" namespace="/" extends="struts-default">
+    	<!-- 声明拦截器 -->
+    	<interceptors>
+    		<interceptor name="checkPrivilege" class="cn.itcast.oa.util.CheckPrivilegeInterceptor"></interceptor>
+    		<!-- 重新定义默认的拦截器 -->
+    		<interceptor-stack name="defaultStack">
+    			<interceptor-ref name="checkPrivilege"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>	
+    	</interceptors>
+    	
+    	<!-- 配置全局result -->
+    	<global-results>
+    		<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+    		<result name="noPrivilegeError">/noPrivilegeError.jsp</result>
+    	</global-results>
+    	
+		<action name="test" class="testAction">
+			<result name="success">/test.jsp</result>
+		</action>
+		<!-- 岗位管理 -->
+		<action name="role_*" class="roleAction"  method="{1}">
+			<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
+			<result name="toList" type="redirectAction">role_list</result>
+			<result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+			<result name="setPrivilegeUI">/WEB-INF/jsp/roleAction/setPrivilegeUI.jsp</result>
+		</action>
+		
+		<!-- 部门管理 -->
+		<action name="department_*" class="departmentAction"  method="{1}">
+			<result name="list">/WEB-INF/jsp/departmentAction/list.jsp</result>
+			<result name="list2">/WEB-INF/jsp/departmentAction/vote1.jsp</result>
+			<result name="list3">/WEB-INF/jsp/departmentAction/voteResult.jsp</result>
+			<result name="vote" type="redirectAction">department_list2</result>
+			<result name="toList" type="redirectAction">department_list?parentId=${parentId}</result>
+			<result name="saveUI">/WEB-INF/jsp/departmentAction/saveUI.jsp</result>
+		</action>
+		<!-- 用户管理 -->
+		<action name="user_*" class="userAction"  method="{1}">
+			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+			<result name="list2">/WEB-INF/jsp/userAction/vote.jsp</result>
+			<result name="list3">/WEB-INF/jsp/userAction/voteResult.jsp</result>
+			<result name="vote" type="redirectAction">user_list2</result>
+			<result name="toList" type="redirectAction">user_list</result>
+			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="holiday">/WEB-INF/jsp/userAction/holiday.jsp</result>
+			<result name="voteBaoxiaoList" type="redirectAction">user_baoxiao</result>
+			<result name="toBaoxiaoList" type="redirectAction">user_baoxiaoUser</result>
+			<result name="baoxiaoList" >/WEB-INF/jsp/userAction/holidayList.jsp</result>
+			<result name="baoxiaoUser" >/WEB-INF/jsp/userAction/holidayListResult.jsp</result>
+			<!--  <result name="saveUI3">/WEB-INF/jsp/userAction/saveUI.jsp?id=${id}</result>-->
+			<result name="toList2" type="redirectAction">user_list</result>
+			<result name="saveUI2">/WEB-INF/jsp/userAction/saveUI2.jsp</result>
+			<result name="toIndex" type="redirect">/index.jsp</result>
+			
+			<result name="logout">/WEB-INF/jsp/userAction/logout.jsp</result>
+		</action>
+		<!-- HomeAction -->
+		<action name="home_*" class="homeAction" method="{1}">
+			<result name="{1}">/WEB-INF/jsp/homeAction/{1}.jsp</result>
+		</action>
+		
+		<!-- 版块管理 -->
+		<action name="forumManage_*" class="forumManageAction"  method="{1}">
+			<result name="list">/WEB-INF/jsp/forumManageAction/list.jsp</result>
+			<result name="fileList">/WEB-INF/jsp/forumManageAction/fileList.jsp</result>
+			<result name="toFileList" type="redirectAction">forumManage_ziliao</result>
+			<result name="file">/WEB-INF/jsp/forumManageAction/file.jsp</result>
+			<result name="toList" type="redirectAction">forumManage_list</result>
+			<result name="saveUI">/WEB-INF/jsp/forumManageAction/saveUI.jsp</result>
+		</action>
+		
+		<!-- 论坛：版块相关功能 -->
+		<action name="forum_*" class="forumAction"  method="{1}">
+			<result name="list">/WEB-INF/jsp/forumAction/list.jsp</result>
+			<result name="show">/WEB-INF/jsp/forumAction/show.jsp</result>
+		</action>
+		<!-- 论坛：主题相关功能 -->
+		<action name="topic_*" class="topicAction"  method="{1}">
+			<result name="addUI">/WEB-INF/jsp/topicAction/addUI.jsp</result>
+			<result name="show">/WEB-INF/jsp/topicAction/show.jsp</result>
+			<result name="toShow" type="redirectAction">topic_show?id=${id}</result>
+			<result name="toShowForum" type="redirectAction">forum_show?id=${forumId}</result>
+		</action>
+		<!-- 论坛：回复相关功能 -->
+		<action name="reply_*" class="replyAction"  method="{1}">
+			<result name="addUI">/WEB-INF/jsp/replyAction/addUI.jsp</result>
+			<result name="toTopicShow" type="redirectAction">topic_show?id=${topicId}</result>
+		</action>
+		
+		
+    </package>
+
+    <!-- Add packages here -->
+
+</struts>

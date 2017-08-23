@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.oa.domain">
+	<class name="Baoxiao" table="baoxiao">
+		<id name="id">
+            <generator class="native"/>
+		</id>
+		<property name="name" />
+		<property name="path"></property>
+		<property name="cause" />
+		<property name="userId"></property>
+		<property name="types" />
+		<property name="username" />
+		<property name="shenpi" />
+		</class>
+</hibernate-mapping>
